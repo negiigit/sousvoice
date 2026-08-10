@@ -3,16 +3,19 @@ import { classifyIntent } from "./intent";
 import { searchChunks } from "./retrieval";
 
 function speakable(text: string): string {
-  return text
+  const out = text
     .replace(/\b1\/2\b/g, "half a")
-    .replace(/\b1\/4\b/g, "a quarter")
-    .replace(/\b1\/3\b/g, "a third")
-    .replace(/\btbsp\b/g, "tablespoon")
-    .replace(/\btsp\b/g, "teaspoon")
-    .replace(/\bg\b/g, "grams")
-    .replace(/^1 tablespoon/i, "One tablespoon")
-    .replace(/^1 teaspoon/i, "One teaspoon");
+    .replace(/\b1\/4\b/g, "a quarter of a")
+    .replace(/\b1\/3\b/g, "a third of a")
+    .replace(/\b(\d+)\s*g\b/g, "$1 grams of")
+    .replace(/\btbsp\b/g, "tablespoon of")
+    .replace(/\btsp\b/g, "teaspoon of")
+    .replace(/\bcup\b/g, "cup of")
+    .replace(/^1 /, "One ")
+    .replace(/\s+of\s+of\s+/g, " of ");
+  return out.charAt(0).toUpperCase() + out.slice(1);
 }
+
 
 /** Deterministic offline sous-chef used in DEMO_MODE and as the Gemini fallback. */
 export function answerLocally(
