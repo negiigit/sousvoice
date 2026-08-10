@@ -41,7 +41,6 @@ function CookPage() {
   const [voiceState, setVoiceState] = useState<VoiceState>("READY");
   const [turns, setTurns] = useState<Turn[]>([]);
   const [typed, setTyped] = useState("");
-  const [notice, setNotice] = useState<string | null>(null);
   const sessionRef = useRef<PreparedSession | null>(null);
   const busyRef = useRef(false);
 
@@ -295,7 +294,6 @@ function CookPage() {
               </a>
             ) : null}
           </div>
-          {notice ? <p className="mt-2 text-sm text-muted-foreground">{notice}</p> : null}
         </section>
       </div>
     </main>

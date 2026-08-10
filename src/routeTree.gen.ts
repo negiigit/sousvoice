@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CookRouteImport } from './routes/cook'
 import { Route as ApiAskRouteImport } from './routes/api/ask'
 import { Route as ApiPrepareRouteImport } from './routes/api/prepare'
 import { Route as ApiTtsRouteImport } from './routes/api/tts'
@@ -17,6 +18,11 @@ import { Route as ApiTtsRouteImport } from './routes/api/tts'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CookRoute = CookRouteImport.update({
+  id: '/cook',
+  path: '/cook',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAskRoute = ApiAskRouteImport.update({
@@ -37,12 +43,14 @@ const ApiTtsRoute = ApiTtsRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/cook': typeof CookRoute
   '/api/ask': typeof ApiAskRoute
   '/api/prepare': typeof ApiPrepareRoute
   '/api/tts': typeof ApiTtsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/cook': typeof CookRoute
   '/api/ask': typeof ApiAskRoute
   '/api/prepare': typeof ApiPrepareRoute
   '/api/tts': typeof ApiTtsRoute
@@ -50,20 +58,22 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/cook': typeof CookRoute
   '/api/ask': typeof ApiAskRoute
   '/api/prepare': typeof ApiPrepareRoute
   '/api/tts': typeof ApiTtsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/ask' | '/api/prepare' | '/api/tts'
+  fullPaths: '/' | '/cook' | '/api/ask' | '/api/prepare' | '/api/tts'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/ask' | '/api/prepare' | '/api/tts'
-  id: '__root__' | '/' | '/api/ask' | '/api/prepare' | '/api/tts'
+  to: '/' | '/cook' | '/api/ask' | '/api/prepare' | '/api/tts'
+  id: '__root__' | '/' | '/cook' | '/api/ask' | '/api/prepare' | '/api/tts'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CookRoute: typeof CookRoute
   ApiAskRoute: typeof ApiAskRoute
   ApiPrepareRoute: typeof ApiPrepareRoute
   ApiTtsRoute: typeof ApiTtsRoute
@@ -76,6 +86,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cook': {
+      id: '/cook'
+      path: '/cook'
+      fullPath: '/cook'
+      preLoaderRoute: typeof CookRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/ask': {
@@ -104,6 +121,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CookRoute: CookRoute,
   ApiAskRoute: ApiAskRoute,
   ApiPrepareRoute: ApiPrepareRoute,
   ApiTtsRoute: ApiTtsRoute,
