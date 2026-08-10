@@ -11,9 +11,9 @@ export function extractVideoId(url: string): string | null {
     const u = new URL(url.trim());
     if (u.hostname === "youtu.be") return u.pathname.slice(1) || null;
     if (!/(^|\.)youtube\.com$/.test(u.hostname)) return null;
-    if (u.pathname === "/watch") return u.searchParams.get("v");
+    if (u.pathname === "/watch") return u.searchParams.get("v") ?? null;
     const m = /^\/(embed|shorts|live)\/([^/?]+)/.exec(u.pathname);
-    return m ? m[2] : null;
+    return m?.[2] ?? null;
   } catch {
     return null;
   }
@@ -30,16 +30,17 @@ export async function fetchTranscript(videoId: string): Promise<string | null> {
     const m = /"captionTracks":(\[.*?\])/.exec(html);
     if (!m) return null;
     const tracks: Array<{ baseUrl: string; languageCode: string }> = JSON.parse(
-      m[1].replace(/\\u0026/g, "&").replace(/\\"/g, '"'),
+      (m[1] ?? "[]").replace(/\\u0026/g, "&").replace(/\\"/g, '"'),
     );
     const track = tracks.find((t) => t.languageCode?.startsWith("en")) ?? tracks[0];
+    // eslint-disable-next-line
     if (!track?.baseUrl) return null;
     const xmlRes = await fetch(track.baseUrl);
     if (!xmlRes.ok) return null;
     const xml = await xmlRes.text();
     const text = [...xml.matchAll(/<text[^>]*>([\s\S]*?)<\/text>/g)]
       .map((t) =>
-        t[1]
+        (t[1] ?? "")
           .replace(/&amp;#39;/g, "'")
           .replace(/&#39;/g, "'")
           .replace(/&quot;/g, '"')

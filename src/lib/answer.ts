@@ -23,6 +23,7 @@ export function answerLocally(
 ): AskResponse {
   const intent = classifyIntent(question);
   const step = Math.min(Math.max(state.currentStep, 1), recipe.steps.length);
+  const stepText = (n: number) => recipe.steps[n - 1] ?? "";
 
   if (intent === "STOP") {
     return { answer: "Okay, I'll wait. Say “Hey Chef, continue” when you're ready.", source: "demo" };
@@ -31,17 +32,17 @@ export function answerLocally(
     if (step >= recipe.steps.length) {
       return { answer: "That was the last step. Your dish is ready — enjoy!", advanceStep: false, source: "demo" };
     }
-    return { answer: recipe.steps[step], advanceStep: true, source: "demo" };
+    return { answer: stepText(step + 1), advanceStep: true, source: "demo" };
   }
   if (intent === "CONTINUE") {
-    return { answer: `Where we left off: ${recipe.steps[step - 1]}`, source: "demo" };
+    return { answer: `Where we left off: ${stepText(step)}`, source: "demo" };
   }
   if (intent === "REPEAT") {
-    return { answer: `Step ${step} of ${recipe.steps.length}. ${recipe.steps[step - 1]}`, source: "demo" };
+    return { answer: `Step ${step} of ${recipe.steps.length}. ${stepText(step)}`, source: "demo" };
   }
   if (intent === "BACK") {
     const target = Math.max(1, step - 1);
-    return { answer: `Going back. ${recipe.steps[target - 1]}`, gotoStep: target, source: "demo" };
+    return { answer: `Going back. ${stepText(target)}`, gotoStep: target, source: "demo" };
   }
   if (intent === "INGREDIENTS") {
     return { answer: `You'll need: ${recipe.ingredients.map(speakable).join(", ")}.`, source: "demo" };
@@ -53,12 +54,12 @@ export function answerLocally(
   const hits = searchChunks(chunks, question, 4);
   if (!hits.length) {
     return {
-      answer: `I couldn't find that in this recipe. Right now you're on step ${step}: ${recipe.steps[step - 1]}`,
+      answer: `I couldn't find that in this recipe. Right now you're on step ${step}: ${stepText(step)}`,
       source: "demo",
     };
   }
 
-  const top = hits[0];
+  const top = hits[0]!;
   if (top.contentType === "ingredient") {
     return { answer: `${speakable(top.text).replace(/,.*$/, "")}.`, source: "demo" };
   }
