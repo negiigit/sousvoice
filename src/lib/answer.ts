@@ -7,7 +7,7 @@ function speakable(text: string): string {
     .replace(/\b1\/2\b/g, "half a")
     .replace(/\b1\/4\b/g, "a quarter of a")
     .replace(/\b1\/3\b/g, "a third of a")
-    .replace(/\b(\d+)\s*g\b/g, "$1 grams of")
+    .replace(/(\d+)\s*g\b/g, "$1 grams of")
     .replace(/\btbsp\b/g, "tablespoon of")
     .replace(/\btsp\b/g, "teaspoon of")
     .replace(/\bcup\b/g, "cup of")
