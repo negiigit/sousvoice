@@ -71,7 +71,7 @@ export async function searchQdrant(
 ): Promise<RecipeChunk[]> {
   const cfg = config();
   if (!cfg) throw new Error("Qdrant not configured");
-  const [vector] = await embed([question], cfg.geminiKey);
+  const vector = (await embed([question], cfg.geminiKey))[0] ?? [];
   const json = (await qdrant(
     `/collections/${COLLECTION}/points/search`,
     {
