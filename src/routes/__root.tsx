@@ -77,14 +77,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "SousVoice — Your Voice-Powered AI Sous-Chef" },
+      { title: "SousVoice — Hands-Free AI Cooking Assistant" },
       { name: "description", content: "Turn any YouTube recipe into a hands-free cooking experience with SousVoice." },
       { name: "author", content: "SousVoice" },
-      { property: "og:title", content: "SousVoice — Your Voice-Powered AI Sous-Chef" },
-      { property: "og:description", content: "Paste a recipe video. Put your device down. Say \"Hey Chef.\"" },
+      { property: "og:title", content: "SousVoice — Hands-Free AI Cooking Assistant" },
+      { property: "og:description", content: "Turn any YouTube recipe into a hands-free cooking experience with SousVoice." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "SousVoice — Hands-Free AI Cooking Assistant" },
+      { name: "twitter:description", content: "Turn any YouTube recipe into a hands-free cooking experience with SousVoice." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a69ac333df1380c2e2fd3e31ba4d3f77/id-preview-61eab9c7--13125614-5310-48d8-b364-6930a110cd76.lovable.app-1786387550279.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a69ac333df1380c2e2fd3e31ba4d3f77/id-preview-61eab9c7--13125614-5310-48d8-b364-6930a110cd76.lovable.app-1786387550279.png" },
     ],
     links: [
       {
