@@ -14,7 +14,7 @@ const Body = z.object({
     timings: z.array(z.string()),
     substitutions: z.array(z.string()),
     tips: z.array(z.string()),
-    sourceUrl: z.string().optional(),
+    sourceUrl: z.string().default(""),
   }),
   chunks: z.array(
     z.object({

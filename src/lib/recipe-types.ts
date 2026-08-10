@@ -7,7 +7,7 @@ export interface Recipe {
   timings: string[];
   substitutions: string[];
   tips: string[];
-  sourceUrl?: string;
+  sourceUrl: string;
 }
 
 export interface RecipeChunk {
